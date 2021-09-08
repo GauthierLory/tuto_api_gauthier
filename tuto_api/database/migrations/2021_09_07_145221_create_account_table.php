@@ -20,8 +20,8 @@ class CreateAccountTable extends Migration
             $table->unsignedBigInteger('immeuble_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('immeuble_id')->references('id')->on('immeubles');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('immeuble_id')->references('id')->on('immeubles')->onDelete('cascade');;
         });
     }
 

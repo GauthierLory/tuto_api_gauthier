@@ -28,10 +28,10 @@ Route::group([
 
 ], function ($router){
 
-    Route::get('list', 'UserController@index');
-    Route::get('show/{id}', 'UserController@show');
-    Route::delete('delete/{id}', 'UserController@destroy');
-    Route::patch('edit/{id}', 'UserController@update');
+    Route::get('/', 'UserController@index');
+    Route::get('/{id}', 'UserController@show');
+    Route::delete('/{id}', 'UserController@destroy');
+    Route::patch('/{id}', 'UserController@update');
 });
 
 Route::group([
@@ -40,11 +40,23 @@ Route::group([
 
 ], function ($router){
 
-    Route::get('list', 'ImmeubleController@index');
-    Route::get('show/{id}', 'ImmeubleController@show');
-    Route::post('create', 'ImmeubleController@store');
-    Route::delete('delete/{id}', 'ImmeubleController@destroy');
-    Route::patch('edit/{id}', 'ImmeubleController@update');
+    Route::get('/', 'ImmeubleController@index');
+    Route::get('/{id}', 'ImmeubleController@show');
+    Route::post('/', 'ImmeubleController@store');
+    Route::delete('/{id}', 'ImmeubleController@destroy');
+    Route::patch('/{id}', 'ImmeubleController@update');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'account'
+], function ($router){
+
+    Route::get('/', 'AccountController@index');
+    Route::get('/{id}', 'AccountController@show');
+    Route::post('/', 'AccountController@store');
+    Route::delete('/{id}', 'AccountController@destroy');
+    Route::patch('/{id}', 'AccountController@update');
 });
 
 Route::group([
