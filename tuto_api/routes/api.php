@@ -17,10 +17,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('users', 'UserController@store');
-Route::get('users', 'UserController@index');
+
+Route::post('register', 'UserController@store');
 
 Route::post('login', 'AuthController@login');
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'users'
+
+], function ($router){
+
+    Route::get('list', 'UserController@index');
+    Route::get('show/{id}', 'UserController@show');
+    Route::delete('delete/{id}', 'UserController@destroy');
+    Route::patch('edit/{id}', 'UserController@update');
+});
 
 Route::group([
 
