@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -33,6 +32,19 @@ Route::group([
     Route::get('show/{id}', 'UserController@show');
     Route::delete('delete/{id}', 'UserController@destroy');
     Route::patch('edit/{id}', 'UserController@update');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'immeubles'
+
+], function ($router){
+
+    Route::get('list', 'ImmeubleController@index');
+    Route::get('show/{id}', 'ImmeubleController@show');
+    Route::post('create', 'ImmeubleController@store');
+    Route::delete('delete/{id}', 'ImmeubleController@destroy');
+    Route::patch('edit/{id}', 'ImmeubleController@update');
 });
 
 Route::group([
