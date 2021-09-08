@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImmeublePostRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Immeuble;
 
@@ -10,9 +12,9 @@ class ImmeubleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $immeuble = Immeuble::all();
         return response()->json([
@@ -23,10 +25,11 @@ class ImmeubleController extends Controller
 
     /**
      * Display information about the resource
-     * 
-     * @return \Illuminate\Http\Response
+     *
+     * @param $id
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $immeuble = Immeuble::find($id);
         if (!$immeuble) {
@@ -45,9 +48,10 @@ class ImmeubleController extends Controller
     /**
      * Delete the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $immeuble = Immeuble::find($id);
         if (!$immeuble) {
@@ -67,9 +71,11 @@ class ImmeubleController extends Controller
     /**
      * Update/edit the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $immeuble = Immeuble::find($id);
         if (!$immeuble) {
@@ -92,23 +98,13 @@ class ImmeubleController extends Controller
         ], 500);
     }
 
-     /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    /**
+    * Store a newly created resource in storage.
+    * @param ImmeublePostRequest $request
+    * @return JsonResponse
+    */
+    public function store(ImmeublePostRequest $request): JsonResponse
     {
-        $immeuble = new Immeuble();
-        
-        $validated = $request->validate([
-            'address' => 'required',
-            'name' => 'required',
-            'code_im' => 'required',
-            'code_soc' => 'required'
-        ]);
-
-        if ($validated){
 
             $immeubleData = $request->all();
             $immeuble = Immeuble::create($immeubleData);
@@ -118,10 +114,4 @@ class ImmeubleController extends Controller
                 'data' => $immeuble->toArray()
             ]);
         }
-        else
-        return response()->json([
-            'success' => false,
-            'message' => 'Immeuble could not be added'
-        ], 500);
-    }
 }

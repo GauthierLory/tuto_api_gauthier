@@ -14,4 +14,9 @@ class Immeuble extends Model
     protected $fillable = [
         'address', 'name', 'code_im' ,'code_soc' 
     ];
+
+    public function account()
+    {
+        return $this->belongsTo('App\Account');
+    }
 }

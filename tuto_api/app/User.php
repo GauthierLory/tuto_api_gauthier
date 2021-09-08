@@ -64,4 +64,9 @@ class User extends Authenticatable implements JWTSubject
            $this->attributes['password'] = bcrypt($password);
        }
    }
+
+   public function account()
+   {
+       return $this->belongsTo('App\Account');
+   }
 }

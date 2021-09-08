@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,7 @@ class UserController extends Controller
 
     /**
      * Display information about the resource
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -46,7 +47,7 @@ class UserController extends Controller
     /**
      * Delete the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {
@@ -103,7 +104,7 @@ class UserController extends Controller
     {
         $userData = $request->all();
         $user = User::create($userData);
-  
+
         return $user;
     }
 
