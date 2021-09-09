@@ -23,7 +23,7 @@ Route::post('login', 'AuthController@login');
 
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api', 'cors'],
     'prefix' => 'users'
 
 ], function ($router){
