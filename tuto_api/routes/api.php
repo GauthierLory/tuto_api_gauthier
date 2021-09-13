@@ -61,7 +61,7 @@ Route::group([
 
 Route::group([
 
-    'middleware' => 'api',
+    'middleware' => ['api','jwt.verify'],
     'prefix' => 'auth'
 
 ], function ($router) {
