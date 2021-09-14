@@ -17,10 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json([
-            'success' => true,
-            'data' => $users
-        ], 200);
+        return response()->json($users, 200);
     }
 
     /**
@@ -98,14 +95,16 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
         $userData = $request->all();
         $user = User::create($userData);
 
-        return $user;
+        return response()->json([
+            'succes'=> true,
+        ], 200);
     }
 
 }

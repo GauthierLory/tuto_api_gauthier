@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'pseudo', 'bio', 'address' ,'phone', 'city', 'country', 'zipcode', 'email', 'password' 
+        'pseudo', 'bio', 'address' ,'phone', 'city', 'country', 'zipcode', 'email', 'password'
     ];
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
    {
        return $this->getKey();
    }
- 
+
    /**
     * Return a key value array, containing any custom claims to be added to the JWT.
     *
@@ -57,12 +57,13 @@ class User extends Authenticatable implements JWTSubject
    {
        return [];
    }
- 
+
    public function setPasswordAttribute($password)
    {
-       if ( !empty($password) ) {
-           $this->attributes['password'] = bcrypt($password);
+       if( \Hash::needsRehash($password) ) {
+           $password = \Hash::make($password);
        }
+       $this->attributes['password'] = $password;
    }
 
    public function account()

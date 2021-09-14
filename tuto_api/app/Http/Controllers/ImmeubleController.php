@@ -17,10 +17,7 @@ class ImmeubleController extends Controller
     public function index(): JsonResponse
     {
         $immeuble = Immeuble::all();
-        return response()->json([
-            'success' => true,
-            'data' => $immeuble
-        ], 200);
+        return response()->json($immeuble, 200);
     }
 
     /**
@@ -113,5 +110,5 @@ class ImmeubleController extends Controller
                 'success' => true,
                 'data' => $immeuble->toArray()
             ]);
-        }
+    }
 }
