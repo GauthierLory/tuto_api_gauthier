@@ -31,8 +31,8 @@ Route::group([
 
 ], function ($router){
 
-    Route::get('/', 'ImmeubleController@index');
-    Route::get('/{id}', 'ImmeubleController@show');
+    Route::get('/{user_id}', 'ImmeubleController@index');
+    Route::get('/{id}/details', 'ImmeubleController@show');
     Route::post('/', 'ImmeubleController@store');
     Route::delete('/{id}', 'ImmeubleController@destroy');
     Route::patch('/{id}', 'ImmeubleController@update');
