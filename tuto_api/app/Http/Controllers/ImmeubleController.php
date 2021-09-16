@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ImmeublePostRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Auth;
 use Illuminate\Http\Request;
 use App\Immeuble;
+use App\Account;
+use App\User;
 
 class ImmeubleController extends Controller
 {
@@ -14,9 +18,15 @@ class ImmeubleController extends Controller
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($idUSer): JsonResponse
     {
-        $immeuble = Immeuble::all();
+        $user = User::findOrFail($idUSer);
+        $user_id = $user->id;
+        
+        $immeuble = DB::table('immeubles')
+            ->join('accounts', 'immeubles.id', '=', 'accounts.immeuble_id')
+            ->where('accounts.user_id', $user_id)
+            ->get();
         return response()->json($immeuble, 200);
     }
 

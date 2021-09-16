@@ -32,7 +32,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'User with id ' . $id . 'not found'
-            ], 400);
+            ],200);
         }
 
         return response()->json([
@@ -78,11 +78,13 @@ class UserController extends Controller
             ], 400);
         }
 
-        $updated = $user->fill($request->all())->save();
+        $userData = $request->all();
+        $updated = $user->fill($userData)->save();
 
         if ($updated)
             return response()->json([
-                'success' => true
+                'success' => true,
+                'data' => $userData
             ]);
         else
             return response()->json([
