@@ -11,6 +11,6 @@ class ImmeubleTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Immeuble::class, 50)->create();
+        factory(App\Immeuble::class, 10)->create();
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Immeuble;
-use Illuminate\Support\Str;
+use App\Account;
 use Faker\Generator as Faker;
 
 /*
@@ -16,11 +15,15 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(Immeuble::class, function (Faker $faker) {
+$factory->define(Account::class, function (Faker $faker) {
     return [
-        'address' => $faker->address,
-        'name' => $faker->catchPhrase,
-        'code_im' => $faker->ean8,
-        'code_soc' => $faker->ean8,
+        'content' => $faker->catchPhrase,
+        'user_id' => function() {
+            return factory(App\User::class)->make();
+        },
+        'immeuble_id' => function() {
+            return factory(App\Immeuble::class)->make();
+        },
+        'created_at' => now(),
     ];
 });

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AccountPostRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Account;
+use App\User;
 
 class AccountController extends Controller
 {
@@ -14,14 +16,19 @@ class AccountController extends Controller
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $account = Account::all();
-        return response()->json([
-            'success' => true,
-            'data' => $account
-        ], 200);
+        $idUser = $request->user()->id;
+        //$user = User::findOrFail($idUSer);
+        
+        $immeuble = DB::table('immeubles')
+            ->join('accounts', 'immeubles.id', '=', 'accounts.immeuble_id')
+            ->where('accounts.user_id', $idUser)
+            ->get();
+        return response()->json($immeuble, 200);
     }
+
+    
 
     /**
      * Display information about the resource
@@ -29,19 +36,20 @@ class AccountController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function show($id): JsonResponse
+    public function show(Request $request, $id): JsonResponse
     {
-        $account = Account::find($id);
-        if (!$account) {
-            return response()->json([
-                'success' => false,
-                'message' => 'account with id ' . $id . ' not found'
-            ], 400);
-        }
+        $idUser = $request->user()->id;
+        $immeuble = DB::table('immeubles')
+            ->join('accounts', 'immeubles.id', '=', 'accounts.immeuble_id')
+            ->join('users', 'users.id', '=', 'accounts.user_id')
+            ->where('accounts.user_id', $idUser)
+            ->where('accounts.immeuble_id', $id)
+            ->select('users.id','users.pseudo', 'users.email', 'users.address', 'users.city', 'users.phone', 'immeubles.id', 'immeubles.name', 'immeubles.code_im', 'immeubles.code_soc', 'accounts.id', 'accounts.content')
+            ->get();
 
         return response()->json([
             'success' => true,
-            'data' => $account
+            'data' => $immeuble
         ], 200);
     }
 
@@ -51,7 +59,7 @@ class AccountController extends Controller
      * @param AccountPostRequest $request
      * @return JsonResponse
      */
-    public function store(AccountPostRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $accountData = $request->all();
         $account = Account::create($accountData);
