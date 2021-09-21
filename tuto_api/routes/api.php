@@ -31,7 +31,7 @@ Route::group([
 
 ], function ($router){
 
-    Route::get('/{user_id}', 'ImmeubleController@index');
+    Route::get('/users/{user_id}', 'ImmeubleController@index');
     Route::get('/{id}/details', 'ImmeubleController@show');
     Route::post('/', 'ImmeubleController@store');
     Route::delete('/{id}', 'ImmeubleController@destroy');
@@ -40,7 +40,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'account'
+    'prefix' => 'accounts'
 ], function ($router){
 
     Route::get('/', 'AccountController@index');
